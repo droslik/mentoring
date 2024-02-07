@@ -1,0 +1,41 @@
+version: "3.3"
+
+services:
+  mentoring:
+    build: .
+    ports:
+      - "8005:8005"
+    env_file:
+      - .env
+    volumes:
+     - .:/app
+    depends_on:
+     - postgres
+
+  postgres:
+    container_name: mentoring_postgres
+    restart: always
+    image: postgres:14
+    volumes:
+     - ./pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+
+#  worker:
+#    build: .
+#    command: ./backend/run_celery.sh
+#    restart: on-failure
+#    depends_on:
+#      - redis
+#      - postgres
+#    env_file:
+#      - .env
+
+  redis:
+    container_name: redis
+    image: redis:latest
+    ports:
+      - '6379:6379'
+      - '16379:16379'
