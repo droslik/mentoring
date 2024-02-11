@@ -68,7 +68,7 @@ class BookRetrieveUpdateApiView(generics.RetrieveUpdateAPIView):
     queryset = Book.objects.all().select_related('author')
     permission_classes = (IsAuthenticated, )
 
-    def put(self, request, *args, **kwargs):
+    def patch(self, request, *args, **kwargs):
         user_id = request.user.id
         instance = self.get_object()
         if instance.author.id == user_id:

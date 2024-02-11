@@ -2,21 +2,19 @@ import factory
 
 from app import models
 
-from django.core.validators import EmailValidator
-from django.db.models import EmailField
-
 
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.User
 
     username = 'alex'
-    email = EmailField(validators=[EmailValidator], blank=False, null=False)
+    email = 'alex@alex.com'
     password = 'alex'
 
 
 class BookFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Book
-
-    author = UserFactory
+    title = 'new_book'
+    author = factory.SubFactory(UserFactory)
+    short_description = 'Very interesting book'
